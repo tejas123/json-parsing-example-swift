@@ -12,11 +12,11 @@ class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lbDetails: UILabel!
-    init(style: UITableViewCellStyle, reuseIdentifier: String)
-    {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        // Initialization code
-    }
+//    init(style: UITableViewCellStyle, reuseIdentifier: String)
+//    {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        // Initialization code
+//    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

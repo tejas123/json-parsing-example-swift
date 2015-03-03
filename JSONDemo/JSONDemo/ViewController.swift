@@ -28,18 +28,21 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func jsonParsing()
     {
         let path: NSString = NSBundle.mainBundle().pathForResource("days", ofType: "json")!
+    
+        var data : NSData = NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMapped, error: nil)!
         
-        var data: NSData = NSData.dataWithContentsOfFile(path, options: NSDataReadingOptions.DataReadingMapped, error: nil)
         var dict: NSDictionary!=NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-        for var i = 0 ; i < dict .valueForKey("MONDAY").count ; i++
+
+        
+        for var i = 0 ; i < (dict.valueForKey("MONDAY") as NSArray).count ; i++
         {
             arrDict.addObject((dict.valueForKey("MONDAY") as NSArray) .objectAtIndex(i))
         }
-        for var i = 0 ; i < dict .valueForKey("TUESDAY").count ; i++
+        for var i = 0 ; i < (dict.valueForKey("TUESDAY") as NSArray).count ; i++
         {
             arrDict.addObject((dict.valueForKey("TUESDAY") as NSArray) .objectAtIndex(i))
         }
-        for var i = 0 ; i < dict .valueForKey("WEDNESDAY").count ; i++
+        for var i = 0 ; i < (dict.valueForKey("WEDNESDAY") as NSArray).count ; i++
         {
             arrDict.addObject((dict.valueForKey("WEDNESDAY") as NSArray) .objectAtIndex(i))
         }
