@@ -29,22 +29,22 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     {
         let path: NSString = NSBundle.mainBundle().pathForResource("days", ofType: "json")!
     
-        var data : NSData = NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMapped, error: nil)!
+        var data : NSData = NSData(contentsOfFile: path as String, options: NSDataReadingOptions.DataReadingMapped, error: nil)!
         
-        var dict: NSDictionary!=NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var dict: NSDictionary!=NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
 
         
-        for var i = 0 ; i < (dict.valueForKey("MONDAY") as NSArray).count ; i++
+        for var i = 0 ; i < (dict.valueForKey("MONDAY") as! NSArray).count ; i++
         {
-            arrDict.addObject((dict.valueForKey("MONDAY") as NSArray) .objectAtIndex(i))
+            arrDict.addObject((dict.valueForKey("MONDAY") as! NSArray) .objectAtIndex(i))
         }
-        for var i = 0 ; i < (dict.valueForKey("TUESDAY") as NSArray).count ; i++
+        for var i = 0 ; i < (dict.valueForKey("TUESDAY") as! NSArray).count ; i++
         {
-            arrDict.addObject((dict.valueForKey("TUESDAY") as NSArray) .objectAtIndex(i))
+            arrDict.addObject((dict.valueForKey("TUESDAY") as! NSArray) .objectAtIndex(i))
         }
-        for var i = 0 ; i < (dict.valueForKey("WEDNESDAY") as NSArray).count ; i++
+        for var i = 0 ; i < (dict.valueForKey("WEDNESDAY") as! NSArray).count ; i++
         {
-            arrDict.addObject((dict.valueForKey("WEDNESDAY") as NSArray) .objectAtIndex(i))
+            arrDict.addObject((dict.valueForKey("WEDNESDAY") as! NSArray) .objectAtIndex(i))
         }
 
     }
@@ -60,15 +60,15 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell : TableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as TableViewCell
+        var cell : TableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
         if(cell == nil)
         {
-            cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as TableViewCell;
+            cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as! TableViewCell;
         }
-        let strTitle : NSString=arrDict[indexPath.row] .valueForKey("TITLE") as NSString
-        let strDescription : NSString=arrDict[indexPath.row] .valueForKey("DETAILS") as NSString
-        cell.lblTitle.text=strTitle
-        cell.lbDetails.text=strDescription
+        let strTitle : NSString=arrDict[indexPath.row] .valueForKey("TITLE") as! NSString
+        let strDescription : NSString=arrDict[indexPath.row] .valueForKey("DETAILS") as! NSString
+        cell.lblTitle.text=strTitle as String
+        cell.lbDetails.text=strDescription as String
         return cell as TableViewCell
     }
 
