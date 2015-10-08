@@ -29,9 +29,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     {
         let path: NSString = NSBundle.mainBundle().pathForResource("days", ofType: "json")!
     
-        var data : NSData = NSData(contentsOfFile: path as String, options: NSDataReadingOptions.DataReadingMapped, error: nil)!
+        let data : NSData = try! NSData(contentsOfFile: path as String, options: NSDataReadingOptions.DataReadingMapped)
         
-        var dict: NSDictionary!=NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+        let dict: NSDictionary!=(try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
 
         
         for var i = 0 ; i < (dict.valueForKey("MONDAY") as! NSArray).count ; i++
