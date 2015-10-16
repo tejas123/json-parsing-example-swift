@@ -10,29 +10,44 @@ import UIKit
 
 class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
 {
+    let yourJsonFormat: String = "JSONFile" // set text JSONFile : json data from file
+                                            // set text JSONUrl : json data from web url
+    
     var arrDict :NSMutableArray=[]
+    
     @IBOutlet weak var tvJSON: UITableView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        jsonParsing()
-        tvJSON .reloadData()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if yourJsonFormat == "JSONFile" {
+            jsonParsingFromFile()
+        } else {
+            jsonParsingFromURL()
+        }
     }
     
-    func jsonParsing()
+    func jsonParsingFromURL () {
+        let url = NSURL(string: "http://theappguruz.in//Apps/iOS/Temp/json.php")
+        let request = NSURLRequest(URL: url!)
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            self.startParsing(data!)
+        }
+    }
+    
+    func jsonParsingFromFile()
     {
         let path: NSString = NSBundle.mainBundle().pathForResource("days", ofType: "json")!
-    
         let data : NSData = try! NSData(contentsOfFile: path as String, options: NSDataReadingOptions.DataReadingMapped)
         
+        self.startParsing(data)
+    }
+    
+    func startParsing(data :NSData)
+    {
         let dict: NSDictionary!=(try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-
         
         for var i = 0 ; i < (dict.valueForKey("MONDAY") as! NSArray).count ; i++
         {
@@ -46,8 +61,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         {
             arrDict.addObject((dict.valueForKey("WEDNESDAY") as! NSArray) .objectAtIndex(i))
         }
-
+        tvJSON .reloadData()
     }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
@@ -71,8 +87,4 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         cell.lbDetails.text=strDescription as String
         return cell as TableViewCell
     }
-
-
-
 }
-
