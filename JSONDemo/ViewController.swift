@@ -76,11 +76,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell : TableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
-        if(cell == nil)
-        {
-            cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as! TableViewCell;
-        }
+        let cell : TableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
         let strTitle : NSString=arrDict[indexPath.row] .valueForKey("TITLE") as! NSString
         let strDescription : NSString=arrDict[indexPath.row] .valueForKey("DETAILS") as! NSString
         cell.lblTitle.text=strTitle as String
